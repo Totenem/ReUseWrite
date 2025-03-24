@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Repurposing Tool</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Turn Anything into IG or Twitter Post</h1>
+        <div class="input-section">
+            <textarea id="userInput" placeholder="Enter your text here..."></textarea>
+            <button id="submitBtn" class="submit-button">Submit</button>
+        </div>
+        <div class="output-container">
+            <div class="output-section">
+                <div class="header-container">
+                    <img src="icons/ig_icon.png" alt="Instagram Logo" class="platform-icon">
+                    <h2>Instagram</h2>
+                </div>
+                <div class="output-content">
+                    <p id="output1">Results will appear here...</p>
+                </div>
+            </div>
+            <div class="output-section">
+                <div class="header-container">
+                    <img src="icons/x_icon.png" alt="Twitter Logo" class="platform-icon">
+                    <h2>Twitter</h2>
+                </div>
+                <div class="output-content">
+                    <p id="output2">Results will appear here...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            const inputText = document.getElementById('userInput').value;
+            try {
+                const response = await fetch('http://repuposing-tool-backend.vercel.app/airesult', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: inputText })
+                });
+                const data = await response.json();
+                document.getElementById('output1').textContent = data.Instagram;
+                document.getElementById('output2').textContent = data.Twitter;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('output1').textContent = 'Translation failed';
+                document.getElementById('output2').textContent = 'Translation failed';
+            }
+        });
+    </script>
+</body>
+</html>
