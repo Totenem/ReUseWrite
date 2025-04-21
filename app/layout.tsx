@@ -13,8 +13,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "ReUseWrite",
   description: "Repurpose your content for different social media platforms",
+  icons: {
+    icon: "/ReUseWrite.png",
+  },
 }
-
 export default function RootLayout({
   children,
 }: {
