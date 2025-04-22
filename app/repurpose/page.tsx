@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Copy, Facebook, Instagram, Loader2, Twitter } from "lucide-react"
+import { Copy, Facebook, Instagram, Loader2, Twitter, Laugh, ThumbsUp, Book} from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { METHODS } from "http"
 
 type PlatformResult = {
   twitter_result: string
@@ -23,6 +24,9 @@ export default function RepurposePage() {
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<PlatformResult | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [tone, setTone] = useState("casual")
+  const [emojis, setEmojis] = useState("low")
+  const [enhancements, setEnhancements] = useState("low")
   const { toast } = useToast()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -43,7 +47,7 @@ export default function RepurposePage() {
     try {
       // Encode the text for URL
       const encodedText = encodeURIComponent(inputText.trim())
-      const response = await fetch(`https://repuposing-tool-backend.vercel.app/results/${encodedText}`)
+      const response = await fetch(`https://repuposing-tool-backend.vercel.app/results/${encodedText}/${tone}/${enhancements}`, {method: "POST"})
       const data = await response.json()
 
       if (data.error) {
@@ -92,6 +96,63 @@ export default function RepurposePage() {
                 <span>{error && <p className="text-destructive">{error}</p>}</span>
                 <span>{inputText.length}/1000</span>
               </div>
+                <div className="space-y-4 mt-4">
+                  {/* Tone Buttons */}
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium">Tone</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <Button 
+                        variant={tone === "casual" ? "default" : "outline"}
+                        onClick={() => setTone("casual")}
+                        className="flex items-center gap-2"
+                      > 
+                        <ThumbsUp className="h-4 w-4" />
+                        Casual
+                      </Button>
+                      <Button 
+                        variant={tone === "funny" ? "default" : "outline"}
+                        onClick={() => setTone("funny")}
+                        className="flex items-center gap-2"
+                      > 
+                        <Laugh className="h-4 w-4" />
+                        Funny
+                      </Button>
+                      <Button
+                        variant={tone === "professional" ? "default" : "outline"}
+                        onClick={() => setTone("professional")}
+                        className="flex items-center gap-2"
+                      > 
+                        <Book className="h-4 w-4" />
+                        Professional 
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Amount of Enhancements */}
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium">Enhancement Level</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        variant={enhancements === "low" ? "default" : "outline"}
+                        onClick={() => setEnhancements("low")}
+                      > 
+                        Low 
+                      </Button>
+                      <Button
+                        variant={enhancements === "medium" ? "default" : "outline"}
+                        onClick={() => setEnhancements("medium")}
+                      >
+                        Medium
+                      </Button>
+                      <Button
+                        variant={enhancements === "high" ? "default" : "outline"}
+                        onClick={() => setEnhancements("high")}
+                      >
+                        High
+                      </Button>
+                    </div>
+                  </div>
+                </div>
             </CardContent>
             <CardFooter>
               <Button onClick={handleSubmit} disabled={isLoading || inputText.length === 0} className="w-full">
