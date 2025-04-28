@@ -1,12 +1,49 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "./mode-toggle"
+import { User, LogIn } from "lucide-react"
+
+type UserData = {
+  id: string
+  email: string
+  username: string
+  created_at: string
+  last_sign_in_at: string
+  role: string
+  aud: string
+  confirmed_at: string
+}
 
 export function Navbar() {
   const pathname = usePathname()
+  const [user, setUser] = useState<UserData | null>(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+
+    if (token) {
+      fetch("https://repuposing-tool-backend.vercel.app/protected-route", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.user) {
+            setUser(data.user) // store full user object
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching protected resource:", error)
+        })
+    }
+  }, [])
 
   return (
     <header className="border-b">
@@ -34,9 +71,40 @@ export function Navbar() {
             </Link>
           </nav>
         </div>
+
         <div className="flex items-center gap-4">
           <ModeToggle />
-          {pathname === "/" && (
+
+          {user ? (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" asChild className="flex items-center gap-2">
+                <Link href="/profile">
+                  <User className="h-4 w-4" />
+                  {user.username || "Profile"}
+                </Link>
+              </Button>
+              <Button variant="destructive" onClick={() => {
+                localStorage.removeItem("token")
+                location.reload()
+              }}>
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" asChild className="flex items-center gap-2">
+                <Link href="/login">
+                  <LogIn className="h-4 w-4" />
+                  Login
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link href="/signup">Sign Up</Link>
+              </Button>
+            </div>
+          )}
+
+          {pathname === "/" && !user && (
             <Button asChild>
               <Link href="/repurpose">Get Started</Link>
             </Button>
