@@ -24,8 +24,18 @@ export function Navbar() {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
+    const storedUser = localStorage.getItem("user")
 
-    if (token) {
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser)
+        setUser(parsedUser)
+      } catch (error) {
+        console.error("Error parsing user data:", error)
+        localStorage.removeItem("user")
+        localStorage.removeItem("token")
+      }
+    } else if (token) {
       fetch("https://repuposing-tool-backend.vercel.app/protected-route", {
         method: "GET",
         headers: {
@@ -36,11 +46,13 @@ export function Navbar() {
         .then((response) => response.json())
         .then((data) => {
           if (data && data.user) {
-            setUser(data.user) // store full user object
+            setUser(data.user)
+            localStorage.setItem("user", JSON.stringify(data.user))
           }
         })
         .catch((error) => {
           console.error("Error fetching protected resource:", error)
+          localStorage.removeItem("token")
         })
     }
   }, [])
@@ -76,20 +88,12 @@ export function Navbar() {
           <ModeToggle />
 
           {user ? (
-            <div className="flex items-center gap-2">
-              <Button variant="outline" asChild className="flex items-center gap-2">
-                <Link href="/profile">
-                  <User className="h-4 w-4" />
-                  {user.username || "Profile"}
-                </Link>
-              </Button>
-              <Button variant="destructive" onClick={() => {
-                localStorage.removeItem("token")
-                location.reload()
-              }}>
-                Logout
-              </Button>
-            </div>
+            <Button variant="outline" asChild className="flex items-center gap-2">
+              <Link href="/profile">
+                <User className="h-4 w-4" />
+                <span className="ml-2">{user.username || "Profile"}</span>
+              </Link>
+            </Button>
           ) : (
             <div className="flex items-center gap-2">
               <Button variant="outline" asChild className="flex items-center gap-2">
