@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Copy, Facebook, Instagram, Loader2, Twitter, Laugh, ThumbsUp, Book } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { Footer } from "@/components/footer"
 
 type PlatformResult = {
   twitter_result: string
@@ -279,13 +280,7 @@ export default function RepurposePage() {
           )}
         </div>
       </main>
-      <footer className="border-t py-6 md:py-0">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2025 ReUseWrite. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

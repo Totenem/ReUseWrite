@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Footer } from "@/components/footer"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
@@ -129,13 +130,7 @@ export default function LoginPage() {
           </Card>
         </div>
       </main>
-      <footer className="border-t py-6 md:py-0">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2025 ReUseWrite. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

@@ -81,6 +81,14 @@ export function Navbar() {
             >
               Repurpose
             </Link>
+            <Link
+              href="/about"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === "/about" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              About
+            </Link>
           </nav>
         </div>
 
