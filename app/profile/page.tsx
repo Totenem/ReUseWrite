@@ -149,9 +149,9 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col gap-4">
-                <Button className="w-full bg-green-500 hover:bg-green-600">
+                {/* <Button className="w-full bg-green-500 hover:bg-green-600">
                   Upgrade to pro
-                </Button>
+                </Button> */}
                 <Button onClick={handleLogout} className="w-full" variant="destructive">
                   Log out account
                 </Button>
