@@ -26,6 +26,7 @@ export default function AboutPage() {
                 <p className="text-muted-foreground">
                   To become the go-to platform for content creators looking to efficiently expand their presence across social media platforms.
                 </p>
+                {/*sfajshfjkhas */}
               </div>
               <div className="flex flex-col gap-2 rounded-lg border bg-background p-6">
                 <h2 className="text-2xl font-semibold">What We Do</h2>
