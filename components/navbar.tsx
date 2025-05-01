@@ -107,12 +107,6 @@ export function Navbar() {
               </Button>
             </div>
           )}
-
-          {pathname === "/" && !user && (
-            <Button asChild>
-              <Link href="/repurpose">Get Started</Link>
-            </Button>
-          )}
         </div>
       </div>
     </header>

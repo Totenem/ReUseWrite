@@ -13,6 +13,19 @@ export default function Home() {
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
+                <a
+                  href="https://www.producthunt.com/posts/reusewrite?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-reusewrite"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=958516&theme=dark&t=1746104350485"
+                    alt="ReUseWrite - Repurpose Your Thoughts, Reach Every Platform | Product Hunt"
+                    width="250"
+                    height="54"
+                    style={{ width: '200px', height: '54px', marginBottom: '10px' }}
+                  />
+                </a>
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                     Repurpose Your Content Across Platforms
                   </h1>
@@ -23,7 +36,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button asChild size="lg">
-                    <Link href="/repurpose">
+                    <Link href="/login">
                       Get Started <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
